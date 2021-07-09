@@ -1,0 +1,49 @@
+version: "3.9"
+services:
+  container_db_1:
+    container_name: container_db_1
+    image: mysql:8.0
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - volume_db_1:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 21Farisa.
+      MYSQL_DATABASE: multipledatabase
+      MYSQL_USER: farisa
+      MYSQL_PASSWORD: Risa123180103.
+    networks:
+      - network_name
+
+  container_db_2:
+    container_name: container_db_2
+    image: mysql:8.0
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - volume_db_2:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 21Farisa.
+      MYSQL_DATABASE: multipledatabase_1
+      MYSQL_USER: farisa
+      MYSQL_PASSWORD: Risa123180103.
+    networks:
+      - network_name
+
+  container_app:
+    container_name: container_app
+    build: .
+    restart: always
+    privileged: true
+    depends_on:
+      - container_db_1
+      - container_db_2
+    networks:
+      - network_name
+    ports:
+      - "8081:80"
+networks:
+  network_name:
+volumes:
+  volume_db_1:
+  volume_db_2:
